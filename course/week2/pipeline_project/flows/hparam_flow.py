@@ -114,7 +114,14 @@ class DigitClassifierFlow(FlowSpec):
     # scores: List[float] 
     # best_index: integer 
     # ================================
+    
+    # Aggregate the best validation performance across inputs into `scores`
+    for i in range(len(inputs)):
+        callback = inputs[i].trainer.callbacks[0]
+        scores.append(callback.best_model_score)
 
+    # Compute the index of the model with the best validation performance
+    best_index = scores.index(min(scores))
     # sanity check for scores length
     assert len(scores) == len(list(inputs)), "Hmm. Incorrect length for scores."
     # sanity check for best_index

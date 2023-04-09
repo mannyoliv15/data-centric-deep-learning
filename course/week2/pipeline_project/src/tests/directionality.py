@@ -169,6 +169,7 @@ class MNISTDirectionalityTest(BaseTest):
       # batch_metric: float (not torch.Tensor!)
       #   Metric computed on a minibatch
       # ================================
+      batch_metric = (preds_raw == preds_transformed).float().mean().item()
       metric.append(batch_metric)
       pbar.update()
     pbar.close()
